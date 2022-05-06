@@ -3,11 +3,11 @@ name: main
 on: [push]
 
 env:
-  REACT_APP_API_BASE_URL: 'https://ap-mytest.azurewebsites.net/api'
+  REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
 
 jobs:
   build:
-
+    environment: Production
     runs-on: ubuntu-latest
 
     steps:
@@ -22,6 +22,21 @@ jobs:
           node-version: 16.x
       - name: Install dependencies
         run: dotnet restore
+      - name: Substitute variables
+      - uses: microsoft/variable-substitution@v1 
+        with:
+          files: '**/*appsettings.json'
+        env:
+          CosmosDb.Endpoint: '${{ secrets.COSMOSDB__ENDPOINT }}'
+          CosmosDb.AccountKey: '${{ secrets.COSMOSDB__ACCOUNTKEY }}'
+          CosmosDb.DatabaseName: '${{ secrets.COSMOSDB__DATABASENAME }}'
+          ServiceBus.ConnectionString: '${{ secrets.SERVICEBUS__ENDPOINT }}'
+          ServiceBus.TopicName: '${{ secrets.SERVICEBUS__TOPICNAME }}'
+          ServiceBus.SubscriptionName: '${{ secrets.SERVICEBUS__SUBSCRIPTIONNAME }}'
+          BlobStorage.ConnectionString: '${{ secrets.BLOBSTORAGE__CONNECTIONSTRING }}'
+          Storage.Directories.ProductPhotos: '${{ secrets.STORAGE__DIRECTORIES__PRODUCTPHOTOS }}'
+          AppUrl: '${{ secrets.APPURL }}'
+
       - name: Build
         run: dotnet build --configuration Release --no-restore
 #      - name: Test
