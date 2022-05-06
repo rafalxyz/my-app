@@ -36,7 +36,7 @@ jobs:
           CosmosDb.Endpoint: "${{ secrets.COSMOSDB__ENDPOINT }}"
           CosmosDb.AccountKey: "${{ secrets.COSMOSDB__ACCOUNTKEY }}"
           CosmosDb.DatabaseName: "${{ secrets.COSMOSDB__DATABASENAME }}"
-          ServiceBus.ConnectionString: "${{ secrets.SERVICEBUS__ENDPOINT }}"
+          ServiceBus.ConnectionString: "${{ secrets.SERVICEBUS__CONNECTIONSTRING }}"
           ServiceBus.TopicName: "${{ secrets.SERVICEBUS__TOPICNAME }}"
           ServiceBus.SubscriptionName: "${{ secrets.SERVICEBUS__SUBSCRIPTIONNAME }}"
           BlobStorage.ConnectionString: "${{ secrets.BLOBSTORAGE__CONNECTIONSTRING }}"
