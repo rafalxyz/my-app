@@ -32,7 +32,6 @@ jobs:
         with:
           files: "**/*appsettings.json"
         env:
-          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
           CosmosDb.Endpoint: "${{ secrets.COSMOSDB__ENDPOINT }}"
           CosmosDb.AccountKey: "${{ secrets.COSMOSDB__ACCOUNTKEY }}"
           CosmosDb.DatabaseName: "${{ secrets.COSMOSDB__DATABASENAME }}"
@@ -45,6 +44,8 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
+        env:
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
 
       #      - name: Test
       #        run: dotnet test --no-restore --verbosity normal
