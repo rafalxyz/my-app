@@ -1,4 +1,4 @@
-import { TextInput, NumberInput, BooleanInput, SimpleForm, required, minLength, maxLength, number, regex, minValue, FileInput, ImageInput, ImageField } from "react-admin";
+import { TextInput, NumberInput, BooleanInput, SimpleForm, required, minLength, maxLength, number, regex, minValue, ImageInput, ImageField } from "react-admin";
 import { Grid, InputAdornment } from "@mui/material";
 
 const validateName = [
