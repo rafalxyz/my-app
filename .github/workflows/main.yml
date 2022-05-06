@@ -3,7 +3,8 @@ name: main
 on: [push]
 
 env:
-  REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+  AZURE_WEBAPP_NAME: ap-mytest
+  AZURE_WEBAPP_PACKAGE_PATH: "." # set this to the path to your web app project, defaults to the repository root
 
 jobs:
   build:
@@ -12,32 +13,48 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.x
+
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 16.x
+
       - name: Install dependencies
         run: dotnet restore
+
       - name: Substitute variables
-        uses: microsoft/variable-substitution@v1 
+        uses: microsoft/variable-substitution@v1
         with:
-          files: '**/*appsettings.json'
+          files: "**/*appsettings.json"
         env:
-          CosmosDb.Endpoint: '${{ secrets.COSMOSDB__ENDPOINT }}'
-          CosmosDb.AccountKey: '${{ secrets.COSMOSDB__ACCOUNTKEY }}'
-          CosmosDb.DatabaseName: '${{ secrets.COSMOSDB__DATABASENAME }}'
-          ServiceBus.ConnectionString: '${{ secrets.SERVICEBUS__ENDPOINT }}'
-          ServiceBus.TopicName: '${{ secrets.SERVICEBUS__TOPICNAME }}'
-          ServiceBus.SubscriptionName: '${{ secrets.SERVICEBUS__SUBSCRIPTIONNAME }}'
-          BlobStorage.ConnectionString: '${{ secrets.BLOBSTORAGE__CONNECTIONSTRING }}'
-          Storage.Directories.ProductPhotos: '${{ secrets.STORAGE__DIRECTORIES__PRODUCTPHOTOS }}'
-          AppUrl: '${{ secrets.APPURL }}'
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
+          CosmosDb.Endpoint: "${{ secrets.COSMOSDB__ENDPOINT }}"
+          CosmosDb.AccountKey: "${{ secrets.COSMOSDB__ACCOUNTKEY }}"
+          CosmosDb.DatabaseName: "${{ secrets.COSMOSDB__DATABASENAME }}"
+          ServiceBus.ConnectionString: "${{ secrets.SERVICEBUS__ENDPOINT }}"
+          ServiceBus.TopicName: "${{ secrets.SERVICEBUS__TOPICNAME }}"
+          ServiceBus.SubscriptionName: "${{ secrets.SERVICEBUS__SUBSCRIPTIONNAME }}"
+          BlobStorage.ConnectionString: "${{ secrets.BLOBSTORAGE__CONNECTIONSTRING }}"
+          Storage.Directories.ProductPhotos: "${{ secrets.STORAGE__DIRECTORIES__PRODUCTPHOTOS }}"
+          AppUrl: "${{ secrets.APPURL }}"
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
-#      - name: Test
-#        run: dotnet test --no-restore --verbosity normal
+
+      #      - name: Test
+      #        run: dotnet test --no-restore --verbosity normal
+
+      - name: Publish
+        run: dotnet publish './MyApp.Web/MyApp.Web.csproj' --no-build -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
+
+      - name: Deploy to Azure
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
+          package: "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp"
