@@ -44,14 +44,14 @@ jobs:
 
       - name: Build
         run: dotnet build --configuration Release --no-restore
-        env:
-          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
 
       #      - name: Test
       #        run: dotnet test --no-restore --verbosity normal
 
       - name: Publish
         run: dotnet publish './MyApp.Web/MyApp.Web.csproj' --no-build -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
+        env:
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
 
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v2
