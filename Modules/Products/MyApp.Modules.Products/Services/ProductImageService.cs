@@ -5,7 +5,7 @@ using MyApp.Modules.Shared.Storage;
 
 namespace MyApp.Modules.Products.Services;
 
-internal class ProductImageService : IProductImageService
+internal class ProductImageService
 {
     private readonly ProductsContext _context;
     private readonly IStorageService _storageService;

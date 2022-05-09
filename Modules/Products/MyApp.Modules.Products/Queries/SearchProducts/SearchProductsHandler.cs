@@ -1,51 +1,22 @@
 ﻿using MyApp.Modules.Products.Database;
-using MyApp.Modules.Products.DTO;
 using MyApp.Modules.Shared.Extensions;
 using MyApp.Modules.Shared.Types;
 using MyApp.Modules.Shared.Web;
 
-namespace MyApp.Modules.Products.Services;
+namespace MyApp.Modules.Products.Queries.SearchProducts;
 
-internal class ProductReader : IProductReader
+internal class SearchProductsHandler
 {
     private readonly ProductsContext _context;
     private readonly IUrlComposer _urlComposer;
 
-    public ProductReader(ProductsContext context, IUrlComposer urlComposer)
+    public SearchProductsHandler(ProductsContext context, IUrlComposer urlComposer)
     {
         _context = context;
         _urlComposer = urlComposer;
     }
 
-    public ProductDetailsDTO? GetDetails(string productId)
-    {
-        var product = _context.Products.Find(productId);
-
-        if (product == null)
-        {
-            return null;
-        }
-
-        return new ProductDetailsDTO
-        {
-            Id = product.Id,
-            Name = product.Name,
-            Price = product.Price,
-            Description = product.Description,
-            Quantity = product.Quantity,
-            IsActive = product.IsActive,
-            ImageUrl = GetProductImageUrl(product.Id, product.ImageFileName)
-        };
-    }
-
-    private string? GetProductImageUrl(string productId, string? imageFileName)
-    {
-        return !string.IsNullOrWhiteSpace(imageFileName)
-            ? _urlComposer.Create($"api/products/{productId}/image")
-            : null;
-    }
-
-    public PagedResponse<ProductItemDTO> Search(ProductSearchDTO dto)
+    public PagedResponse<ProductItemDTO> Handle(SearchProducts dto)
     {
         var query = _context.Products.Select(product => new ProductItemDTO
         {
@@ -86,5 +57,12 @@ internal class ProductReader : IProductReader
         }
 
         return response;
+    }
+
+    private string? GetProductImageUrl(string productId, string? imageFileName)
+    {
+        return !string.IsNullOrWhiteSpace(imageFileName)
+            ? _urlComposer.Create($"api/products/{productId}/image")
+            : null;
     }
 }

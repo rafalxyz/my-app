@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿namespace MyApp.Modules.Products.Queries.GetProductDetails;
 
-namespace MyApp.Modules.Products.DTO;
-
-public class ProductCreateUpdateDTO
+public class ProductDetailsDTO
 {
+    public string Id { get; set; } = null!;
+
     public string Name { get; set; } = null!;
 
     public string Description { get; set; } = null!;
@@ -14,5 +14,5 @@ public class ProductCreateUpdateDTO
 
     public int Quantity { get; set; }
 
-    public IFormFile? Image { get; set; }
+    public string? ImageUrl { get; set; }
 }
