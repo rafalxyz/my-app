@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿namespace MyApp.Modules.Products.DTO;
 
-namespace MyApp.Modules.Products.Commands.UpdateProduct;
-
-internal class UpdateProduct
+public class ProductDetailsDTO
 {
     public string Id { get; set; } = null!;
 
@@ -16,5 +14,5 @@ internal class UpdateProduct
 
     public int Quantity { get; set; }
 
-    public IFormFile? Image { get; set; }
+    public string? ImageUrl { get; set; }
 }

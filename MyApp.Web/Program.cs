@@ -1,4 +1,3 @@
-using FastEndpoints;
 using MyApp.Modules.Products;
 using MyApp.Modules.Shared;
 using MyApp.Web.Extensions;
@@ -8,8 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-
-builder.Services.AddFastEndpoints();
 
 builder.Services.ConfigureServices(builder.Configuration);
 
@@ -25,9 +22,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
-
 app.UseAuthorization();
+
+app.MapControllers();
 
 if (app.Environment.IsDevelopment())
 {
@@ -38,12 +35,10 @@ if (app.Environment.IsDevelopment())
         .AllowAnyHeader());
 }
 
-app.MapControllers();
-app.UseFastEndpoints();
-
 app.UseStaticFiles();
 
 app.UseStaticFiles();
+app.UseRouting();
 
 app.UseMiddleware<ExceptionMiddleware>();
 

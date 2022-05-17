@@ -1,4 +1,4 @@
-﻿namespace MyApp.Modules.Products.Queries.SearchProducts;
+﻿namespace MyApp.Modules.Products.DTO;
 
 public class ProductItemDTO
 {

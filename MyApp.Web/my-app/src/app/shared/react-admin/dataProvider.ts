@@ -9,11 +9,13 @@ const dataProvider: DataProvider = {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
 
+        console.log(apiUrl);
+
         const query = {
             pageNumber: page,
             pageSize: perPage,
             orderBy: field,
-            orderDirection: order === 'ASC' ? 'Asc' : 'Desc',
+            orderDirection: order,
             ...params.filter
         };
         const url = `${apiUrl}/${resource}/search?${stringify(query)}`;
@@ -88,7 +90,6 @@ const dataProvider: DataProvider = {
     delete: (resource, params) =>
         httpClient(`${apiUrl}/${resource}/${params.id}`, {
             method: 'DELETE',
-            body: JSON.stringify({})
         }).then(({ json }) => ({ data: json })),
 
     deleteMany: (resource, params) => {
@@ -110,7 +111,7 @@ const getProductFormData = (data: any) => {
     formData.append('quantity', data.quantity);
     formData.append('price', data.price);
     formData.append('description', data.description);
-    formData.append('image', data.image?.rawFile);
+    formData.append('image', data.image.rawFile);
 
     return formData;
 }

@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using MyApp.Modules.Products.Database;
-using MyApp.Modules.Shared.IoC;
+using MyApp.Modules.Products.Services;
 
 namespace MyApp.Modules.Products;
 
@@ -20,12 +19,10 @@ public static class ConfigureProducts
                 configuration["CosmosDb:DatabaseName"]);
         });
 
-        var serviceTypes = typeof(ConfigureProducts).Assembly.GetServices();
-
-        foreach (var serviceType in serviceTypes)
-        {
-            services.TryAddTransient(serviceType);
-        }
+        services.AddTransient<IProductService, ProductService>();
+        services.AddTransient<IProductReader, ProductReader>();
+        services.AddTransient<IProductImageService, ProductImageService>();
+        services.AddTransient<ProductSeeder>();
     }
 
     public static void InitProducts(this IServiceProvider serviceProvider, IHostEnvironment environment)
