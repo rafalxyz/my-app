@@ -1,26 +1,39 @@
-import { TextInput, NumberInput, BooleanInput, SimpleForm, required, minLength, maxLength, number, regex, minValue, ImageInput, ImageField } from "react-admin";
-import { Grid, InputAdornment } from "@mui/material";
+import {
+  TextInput,
+  NumberInput,
+  BooleanInput,
+  SimpleForm,
+  required,
+  minLength,
+  maxLength,
+  number,
+  regex,
+  minValue,
+  ImageInput,
+  ImageField,
+} from 'react-admin';
+import { Grid, InputAdornment } from '@mui/material';
 
 const validateName = [
-    required('Please provide name'),
-    minLength(2, 'Name must be at least 2 characters long'),
-    maxLength(100, 'Name must be at most 100 characters long')
+  required('Please provide name'),
+  minLength(2, 'Name must be at least 2 characters long'),
+  maxLength(100, 'Name must be at most 100 characters long'),
 ];
 
 const validatePrice = [
-    required('Please provide price'),
-    regex(/^\d+(,\d{1,2})?$/, 'Please provide a valid price')
+  required('Please provide price'),
+  regex(/^\d+(,\d{1,2})?$/, 'Please provide a valid price'),
 ];
 
 const validateQuantity = [
-    required('Please provide quantity'),
-    number('Please provide a VALID quantity'),
-    minValue(0, 'Quantity cannot be negative'),
+  required('Please provide quantity'),
+  number('Please provide a VALID quantity'),
+  minValue(0, 'Quantity cannot be negative'),
 ];
 
 const validateDescription = [
-    required('Please provide description'),
-    maxLength(10000, 'Description must be at most 10000 characters long')
+  required('Please provide description'),
+  maxLength(10000, 'Description must be at most 10000 characters long'),
 ];
 
 export const ProductForm = ({ isEdit }: { isEdit?: boolean }) => (
@@ -39,18 +52,32 @@ export const ProductForm = ({ isEdit }: { isEdit?: boolean }) => (
       </Grid>
       <Grid item xs={6}></Grid>
       <Grid item xs={2}>
-        <NumberInput source="price" validate={validatePrice} InputProps={{
+        <NumberInput
+          source="price"
+          validate={validatePrice}
+          InputProps={{
             startAdornment: <InputAdornment position="start">$</InputAdornment>,
-          }} />
+          }}
+        />
       </Grid>
       <Grid item xs={12}>
         <NumberInput source="quantity" validate={validateQuantity} />
       </Grid>
       <Grid item xs={12}>
-        <TextInput multiline source="description" fullWidth validate={validateDescription} />
+        <TextInput
+          multiline
+          source="description"
+          fullWidth
+          validate={validateDescription}
+        />
       </Grid>
       <Grid item xs={12}>
-        <ImageInput source="image" label="Image" accept="image/*" multiple={false}>
+        <ImageInput
+          source="image"
+          label="Image"
+          accept="image/*"
+          multiple={false}
+        >
           <ImageField source="src" title="title" />
         </ImageInput>
       </Grid>

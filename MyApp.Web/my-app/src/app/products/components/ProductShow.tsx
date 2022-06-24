@@ -6,12 +6,12 @@ import {
   BooleanField,
   useShowContext,
   ImageField,
-} from "react-admin";
-import usePriceSubscriptions from "../hooks/usePriceSubscription";
-import { ProductPriceSubscribeButton } from "./ProductPriceSubscribeButton";
-import { ProductPriceUnsubscribeButton } from "./ProductPriceUnsubscribeButton";
-import PriceField from "../../shared/react-admin/fields/PriceField";
-import Box from "@mui/material/Box";
+} from 'react-admin';
+import usePriceSubscriptions from '../hooks/usePriceSubscription';
+import { ProductPriceSubscribeButton } from './ProductPriceSubscribeButton';
+import { ProductPriceUnsubscribeButton } from './ProductPriceUnsubscribeButton';
+import PriceField from '../../shared/react-admin/fields/PriceField';
+import Box from '@mui/material/Box';
 
 const ProductShowLayoutInternal = ({ record }: { record: any }) => {
   const { subscriptions } = usePriceSubscriptions();

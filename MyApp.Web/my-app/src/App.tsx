@@ -21,10 +21,21 @@ const App = () => {
 
   return (
     <Admin dataProvider={dataProvider} theme={theme}>
-      <Resource name="products" list={ProductList} show={ProductShow} edit={ProductEdit} create={ProductCreate} icon={PostIcon} />
-      <Resource name="subscriptions" list={SubscriptionList} icon={NotificationsActive} />
+      <Resource
+        name="products"
+        list={ProductList}
+        show={ProductShow}
+        edit={ProductEdit}
+        create={ProductCreate}
+        icon={PostIcon}
+      />
+      <Resource
+        name="subscriptions"
+        list={SubscriptionList}
+        icon={NotificationsActive}
+      />
     </Admin>
-);
-}
+  );
+};
 
 export default App;
