@@ -1,11 +1,22 @@
-﻿using MyApp.Modules.Products.Database;
+﻿using MyApp.Modules.Products.Database.Entities;
+using MyApp.Modules.Products.Database;
 using MyApp.Modules.Products.DTO;
-using MyApp.Modules.Shared.Exceptions;
-using MyApp.Modules.Products.Database.Entities;
-using MyApp.Modules.Shared.EventBus;
 using MyApp.Modules.Products.Integration.Events;
+using MyApp.Modules.Shared.EventBus;
+using MyApp.Modules.Shared.Exceptions;
 
 namespace MyApp.Modules.Products.Services;
+
+public interface IProductService
+{
+    string Create(ProductCreateUpdateDTO dto);
+
+    void Delete(string productId);
+
+    void DeleteMany(IEnumerable<string> productIds);
+
+    void Update(string productId, ProductCreateUpdateDTO dto);
+}
 
 internal class ProductService : IProductService
 {

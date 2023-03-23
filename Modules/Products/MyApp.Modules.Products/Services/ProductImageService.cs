@@ -5,6 +5,13 @@ using MyApp.Modules.Shared.Storage;
 
 namespace MyApp.Modules.Products.Services;
 
+public interface IProductImageService
+{
+    void UploadImage(IFormFile file);
+
+    byte[]? GetImage(string productId);
+}
+
 internal class ProductImageService : IProductImageService
 {
     private readonly ProductsContext _context;

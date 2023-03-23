@@ -6,6 +6,13 @@ using MyApp.Modules.Shared.Web;
 
 namespace MyApp.Modules.Products.Services;
 
+public interface IProductReader
+{
+    ProductDetailsDTO? GetDetails(string productId);
+
+    PagedResponse<ProductItemDTO> Search(ProductSearchDTO dto);
+}
+
 internal class ProductReader : IProductReader
 {
     private readonly ProductsContext _context;
